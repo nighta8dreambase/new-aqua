@@ -1,0 +1,14 @@
+runtime: python27
+service: wraist-band-4
+api_version: 1
+threadsafe: true
+handlers:
+  - url: /
+    static_files: build/index.html
+    upload: build/index.html
+  - url: /static/(.*)
+    static_files: build/static/\1
+    upload: build/static/(.*)
+  - url: /(.*)
+    static_files: build/index.html
+    upload: build/index.html

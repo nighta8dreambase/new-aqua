@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+html {
+  --primary: #4684e2;
+  --sub-primary: #e0e7f6;
+  --primary-bg: #274f8c;
+  --error: #c83728;
+  --fresh-error: #e13c32;
+  --gray: #9f9fa3;
+  --hard-gray: #8f919c;
+  --success: #10940e;
+  --warning: #bc702a;
+
+  background: #f8f8fa;
+}
+body {
+  font-family: "Poppins" !important;
+}
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+.MuiPagination-ul {
+  justify-content: center;
+}
+button:focus,
+input:focus {
+  outline: unset;
+}
+:focus {
+  outline: unset;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#tableDeviceHistoryDatagrid .MuiDataGrid-cell {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+#tableDeviceHistoryDatagrid .MuiDataGrid-columnsContainer {
+  border: 0;
+}
+.pin {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background: var(--color);
+  text-align: center;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -50%;
+  color: #fff;
+}
+
+.pin::after {
+  position: absolute;
+  content: "";
+  width: 0px;
+  height: 0px;
+  bottom: -11px;
+  left: 1px;
+  border: 6.5px solid transparent;
+  border-top: 8px solid var(--color);
+}

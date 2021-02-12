@@ -1,0 +1,9 @@
+dispatch:
+  - url: "dev.pmhsolution.com/*"
+    service: wraist-band-4
+  - url: "www.pmhsolution.com/*"
+    service: wraist-band-4
+  - url: "dev.pmhsolution.com/*"
+    service: wraist-band-4
+  - url: "www.dev.pmhsolution.com/*"
+    service: wraist-band-4
