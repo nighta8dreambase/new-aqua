@@ -204,7 +204,11 @@ export const UserPreview = observer(() => {
             </Box>
             <Box py={4} px={6} width={{ xs: "100%", md: "60%" }}>
               {result_userRead && (
-                <UserInfoCard reload={fire_userRead} user={result_userRead} />
+                <UserInfoCard
+                  reload={fire_userRead}
+                  user={result_userRead}
+                  userRaw={result_userRead_raw}
+                />
               )}
             </Box>
           </Box>
@@ -277,18 +281,18 @@ export const UserPreview = observer(() => {
               </AccordionSummary>
               <AccordionDetails>
                 <Box px={{ xs: 0, md: 3 }} width="100%">
-                  <Grid item container xs={12}>
-                    <Grid xs={12} md={4} item container>
+                  <Grid item xs={12}>
+                    <Grid item xs={12} md={4}>
                       <Box
                         display="flex"
                         width="100%"
                         paddingRight={{ md: 5 }}
                         mb={{ xs: 4, md: 0 }}
                       >
-                        <Grid xs={7}>
+                        <Grid item xs={7}>
                           <DeviceField label="IMEI">{deivce.imei}</DeviceField>
                         </Grid>
-                        <Grid xs={5}>
+                        <Grid item xs={5}>
                           <DeviceField
                             label="Device status"
                             border={{ xs: 0, md: 1 }}
@@ -317,24 +321,24 @@ export const UserPreview = observer(() => {
                         </Grid>
                       </Box>
                     </Grid>
-                    <Grid xs={12} md={4} item container>
+                    <Grid item xs={12} md={4}>
                       <Box
                         display="flex"
                         width="100%"
                         paddingRight={{ md: 5 }}
                         mb={{ xs: 4, md: 0 }}
                       >
-                        <Grid xs={4}>
+                        <Grid item xs={4}>
                           <DeviceField label="Body temp">
                             <Box fontWeight={600}>{deivce.body_temp}</Box>
                           </DeviceField>
                         </Grid>
-                        <Grid xs={4}>
+                        <Grid item xs={4}>
                           <DeviceField label="Heart rate">
                             <Box fontWeight={600}>{deivce.heart_rate}</Box>
                           </DeviceField>
                         </Grid>
-                        <Grid xs={4}>
+                        <Grid item xs={4}>
                           <DeviceField
                             label="Blood pressure"
                             border={{ xs: 0, md: 1 }}
@@ -346,14 +350,14 @@ export const UserPreview = observer(() => {
                         </Grid>
                       </Box>
                     </Grid>
-                    <Grid xs={12} md={2} item container>
+                    <Grid item xs={12} md={2}>
                       <Box display="flex" width="100%" mb={{ xs: 4, md: 0 }}>
-                        <Grid xs={6}>
+                        <Grid item xs={6}>
                           <DeviceField label="Latitude">
                             {deivce.latitude.toFixed(3)}
                           </DeviceField>
                         </Grid>
-                        <Grid xs={6}>
+                        <Grid item xs={6}>
                           <DeviceField
                             label="Longtitude"
                             border={{ xs: 0, md: 1 }}
@@ -363,14 +367,14 @@ export const UserPreview = observer(() => {
                         </Grid>
                       </Box>
                     </Grid>
-                    <Grid xs={12} md={2} item container>
+                    <Grid item xs={12} md={2}>
                       <Box display="flex" width="100%" paddingLeft={{ md: 5 }}>
-                        <Grid xs={6}>
+                        <Grid item xs={6}>
                           <DeviceField label="Battery">
                             {deivce.battery}
                           </DeviceField>
                         </Grid>
-                        <Grid xs={6}>
+                        <Grid item xs={6}>
                           <DeviceField label="Steps">{deivce.step}</DeviceField>
                         </Grid>
                       </Box>
@@ -391,8 +395,8 @@ export const UserPreview = observer(() => {
         <Box fontSize="h5.fontSize" fontWeight={500} mb={{ xs: 2, md: 0 }}>
           Health Log
         </Box>
-        <Grid item container md={4} xs={12}>
-          <Grid xs={6} css={{ padding: "0 5px" }}>
+        <Grid item md={4} xs={12}>
+          <Grid item xs={6} css={{ padding: "0 5px" }}>
             <MuiPickersUtilsProvider utils={LuxonUtils}>
               <KeyboardDatePicker
                 style={{
@@ -419,7 +423,7 @@ export const UserPreview = observer(() => {
               />
             </MuiPickersUtilsProvider>
           </Grid>
-          <Grid xs={6} css={{ padding: "0 5px" }}>
+          <Grid item xs={6} css={{ padding: "0 5px" }} style={{marginTop:"15px"}}>
             <MuiPickersUtilsProvider utils={LuxonUtils}>
               <KeyboardDatePicker
                 style={{ margin: 0, width: "100%", backgroundColor: "#fff" }}
@@ -445,29 +449,31 @@ export const UserPreview = observer(() => {
         </Grid>
       </Box>
       <Grid container>
-        <Grid md={8} xs={12}>
+        <Grid item md={8} xs={12}>
           <Box
             paddingRight={{ xs: 0, md: 3 }}
             css={{ backgroundColor: "transparent" }}
           >
             <Grid
+              item
               xs={12}
               style={{ height: 380, overflow: "hidden", marginBottom: 15 }}
             >
               <BodyTempGraph data={parseData} />
             </Grid>
             <Grid
+              item
               xs={12}
               style={{ height: 380, overflow: "hidden", marginBottom: 15 }}
             >
               <HeartRateGraph data={parseData} />
             </Grid>
-            <Grid xs={12} style={{ height: 380, overflow: "hidden" }}>
+            <Grid item xs={12} style={{ height: 380, overflow: "hidden" }}>
               <BloodPressureGraph data={parseData} />
             </Grid>
           </Box>
         </Grid>
-        <Grid md={4} xs={12}>
+        <Grid item md={4} xs={12}>
           <StickyContainer
             style={{
               width: "100%",

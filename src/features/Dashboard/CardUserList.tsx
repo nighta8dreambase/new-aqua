@@ -151,17 +151,17 @@ export const DeviceValueTab = observer(
   ({ device }: { device?: userDevice }) => {
     return (
       <Grid container>
-        <Grid xs={3} style={{ maxWidth: "4.5rem" }}>
-          {device?.wristband_temp ? (
+        <Grid item xs={3} style={{ maxWidth: "4.5rem" }}>
+          {device?.body_temp ? (
             <DeviceValue
               icon={TemperatureIcon}
-              value={device?.wristband_temp.toString()}
+              value={device?.body_temp.toString()}
             />
           ) : (
             <DeviceValue icon={TemperatureIcon} value={"?"} />
           )}
         </Grid>
-        <Grid xs={3} style={{ maxWidth: "4.5rem" }}>
+        <Grid item xs={3} style={{ maxWidth: "4.5rem" }}>
           {device?.heart_rate ? (
             <DeviceValue
               icon={FavoriteIcon}
@@ -171,7 +171,7 @@ export const DeviceValueTab = observer(
             <DeviceValue icon={FavoriteIcon} value={"?"} />
           )}
         </Grid>
-        <Grid xs={3} style={{ maxWidth: "6rem" }}>
+        <Grid item xs={3} style={{ maxWidth: "6rem" }}>
           <DeviceValue
             icon={BloodIcon}
             value={`${device?.blood_systolic || "?"} / ${
@@ -179,7 +179,7 @@ export const DeviceValueTab = observer(
             }`}
           />
         </Grid>
-        <Grid xs={3} style={{ maxWidth: "3rem" }}>
+        <Grid item xs={3} style={{ maxWidth: "3rem" }}>
           <DeviceValue
             icon={BatteryIcon}
             value={`${device?.battery}%`}
@@ -191,7 +191,7 @@ export const DeviceValueTab = observer(
   }
 );
 
-const UserItem = observer(
+export const UserItem = observer(
   ({
     user,
     device,
@@ -206,7 +206,7 @@ const UserItem = observer(
     borderTop?: boolean;
   }) => {
     const history = useHistory();
-    // console.log("UserItem", index);
+    // console.log("UserItem", device);
     return (
       <Box
         className="relative"
@@ -226,6 +226,7 @@ const UserItem = observer(
           px={{ xs: 2, md: 0 }}
           borderTop={borderTop ? "1px solid #ddd" : 0}
           css={{
+            opacity: device?.latitude && device?.longitude ? 1 : 0.5,
             "@media (max-width: 992px)": { borderTop: 0 },
             "&:hover": {
               backgroundColor: "rgba(3,169,244,0.08)",
@@ -239,7 +240,7 @@ const UserItem = observer(
             </Avatar>
           </Box>
           <Grid container>
-            <Grid xs={12} md={8}>
+            <Grid item xs={12} md={8}>
               <Box mb={2} position="relative">
                 <Box
                   display="flex"
@@ -281,17 +282,17 @@ const UserItem = observer(
                   }
               | ${user.nationality} | ${place?.name_en}`}
                 </Box>
-                <Box
+                {/* <Box
                   display={{ xs: "block", md: "none" }}
                   position="absolute"
                   right={0}
                   top="calc(50% - 15px)"
                 >
                   <ArrowForwardIosIcon css={{ fontSize: 15 }} />
-                </Box>
+                </Box> */}
               </Box>
             </Grid>
-            <Grid md={4}>
+            <Grid item md={4}>
               <Box
                 fontSize={12}
                 textAlign="right"
@@ -301,7 +302,7 @@ const UserItem = observer(
                 {device?.updated_at && dateStr(new Date(device?.updated_at))}
               </Box>
             </Grid>
-            <Grid md={6}>
+            <Grid item md={6}>
               <Box display={{ xs: "none", md: "block" }}>
                 <OnlineTab user={user} device={device} />
               </Box>
@@ -309,8 +310,8 @@ const UserItem = observer(
             <Grid
               md={6}
               xs={10}
-              container
-              spacing={2}
+              item
+              // spacing={2}
               style={{ justifyContent: "flex-end" }}
             >
               <DeviceValueTab device={device} />
@@ -324,6 +325,7 @@ const UserItem = observer(
           justifyContent="space-between"
           alignItems="center"
           css={{
+            opacity: device?.latitude && device?.longitude ? 1 : 0.5,
             "@media (max-width: 992px)": { borderTop: "1px solid #ddd" },
           }}
         >
@@ -345,7 +347,7 @@ export const CardUserList = observer(
   ({
     result_userList,
     loading_userList,
-    // total = 0,
+    total = 0,
     filter,
     mapRef,
     setPage,
@@ -360,12 +362,14 @@ export const CardUserList = observer(
     const [userLiser, setUserLiser] = useState<UsersQuarantine[]>([]);
     useEffect(() => {
       setUserLiser(
-        result_userList.filter((user) => {
-          return user.device?.latitude && user.device?.latitude;
-        })
+        result_userList
+        // result_userList.filter((user) => {
+        //   return user.device?.latitude && user.device?.latitude;
+        //   return user.device?.latitude && user.device?.latitude;
+        // })
       );
     }, [result_userList]);
-    const total = userLiser.length;
+    // const total = userLiser.length;
     const pageCount = Math.ceil(total / (filter?.perPage || 10));
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
       setPage(value);
@@ -412,6 +416,8 @@ export const CardUserList = observer(
           </Box>
           <Box>
             {(userLiser || []).map((user, i) => {
+              var index =
+                ((filter?.page || 1) - 1) * (filter?.perPage || 10) + i + 1;
               return (
                 <div
                   onMouseEnter={() => {
@@ -422,7 +428,8 @@ export const CardUserList = observer(
                       mapRef.current.focus &&
                       mapRef.current.focus(
                         user.device?.latitude,
-                        user.device?.longitude
+                        user.device?.longitude,
+                        index.toString()
                       );
                   }}
                   onMouseLeave={() => {
@@ -432,15 +439,7 @@ export const CardUserList = observer(
                       mapRef.current.reset();
                   }}
                 >
-                  <UserItem
-                    {...user}
-                    index={
-                      ((filter?.page || 1) - 1) * (filter?.perPage || 10) +
-                      i +
-                      1
-                    }
-                    borderTop={i !== 0}
-                  />
+                  <UserItem {...user} index={index} borderTop={i !== 0} />
                 </div>
               );
             })}

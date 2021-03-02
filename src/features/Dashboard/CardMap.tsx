@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import {
   Box,
@@ -52,6 +52,7 @@ export const CardMap = observer(
     loading_userList,
     page,
     perPage,
+    loadmore = false,
   }: {
     style?: any;
     mapRef: any;
@@ -59,6 +60,7 @@ export const CardMap = observer(
     loading_userList: boolean;
     page: number;
     perPage: number;
+    loadmore?: boolean;
   }) => {
     const classes = useStyles();
     const history = useHistory();
@@ -92,7 +94,9 @@ export const CardMap = observer(
                 return {
                   lat: device ? device.latitude : 0,
                   lng: device ? device.longitude : 0,
-                  name: ((page - 1) * perPage + i + 1).toString(),
+                  name: loadmore
+                    ? (i + 1).toString()
+                    : ((page - 1) * perPage + i + 1).toString(),
                   active: device?.device_status === 1 ? true : false,
                   hoverText: user.name,
                   onClick: () => {
@@ -123,6 +127,7 @@ export const CardMapMemo = React.memo(
     loading_userList,
     page,
     perPage,
+    loadmore = false,
   }: {
     style?: any;
     mapRef: any;
@@ -130,15 +135,25 @@ export const CardMapMemo = React.memo(
     loading_userList: boolean;
     page: number;
     perPage: number;
+    loadmore?: boolean;
   }) => {
+    const [userLiser, setUserLiser] = useState<UsersQuarantine[]>([]);
+    useEffect(() => {
+      if (loadmore) {
+        setUserLiser([...userLiser, ...result_userList]);
+      } else {
+        setUserLiser(result_userList);
+      }
+    }, [result_userList]);
     return (
       <CardMap
         style={style}
-        result_userList={result_userList}
+        result_userList={userLiser}
         loading_userList={loading_userList}
         page={page}
         perPage={perPage}
         mapRef={mapRef}
+        loadmore={loadmore}
       />
     );
   }

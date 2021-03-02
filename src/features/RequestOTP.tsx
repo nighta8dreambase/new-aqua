@@ -121,7 +121,7 @@ export const RequestOTP = observer(
           </Box>
         </Grid>
         <Box px={{ md: 8, xs: 0 }} mt={4}>
-          <Grid item container direction="row" spacing={1}>
+          <Grid container direction="row" spacing={1}>
             {Array.from(Array(6).keys()).map((_v, index) => (
               <OtpTextField index={index} form={form} setForm={setForm} />
             ))}

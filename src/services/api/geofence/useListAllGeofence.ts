@@ -8,7 +8,7 @@ const GEO_FENCES: Geofence[] = [
     id: 1,
     branch_id: "2",
     name: "วง A",
-    maximumDistance: 9,
+    max_distance : 9,
     type: "radius",
     radius: 74758.42357508562,
     coordinates: [{ lat: 17.33161298442164, lng: 97.94708697211877 }],
@@ -17,7 +17,7 @@ const GEO_FENCES: Geofence[] = [
     id: 2,
     branch_id: "2",
     name: "วง B",
-    maximumDistance: 12,
+    max_distance : 12,
     type: "radius",
     radius: 100882.65023493911,
     coordinates: [{ lat: 16.659199302382707, lng: 100.36407915961877 }],
@@ -26,7 +26,7 @@ const GEO_FENCES: Geofence[] = [
     id: 3,
     branch_id: "2",
     name: "รอบเกาะราชาน้อย",
-    maximumDistance: 3,
+    max_distance : 3,
     type: "polygon",
     coordinates: [
       { lat: 15.762010085094655, lng: 98.96991412055627 },
@@ -39,7 +39,7 @@ const GEO_FENCES: Geofence[] = [
     id: 4,
     branch_id: "2",
     name: "รอบเมือง",
-    maximumDistance: 6,
+    max_distance : 6,
     type: "polygon",
     coordinates: [
       { lat: 15.52926647730416, lng: 97.47577349555627 },
@@ -78,7 +78,7 @@ export const useListAllGeofence = () => {
     method: "GET",
   });
 
-  console.log("useListAllGeofence", res?.data);
+  // console.log("useListAllGeofence", res?.data);
 
   return {
     result_geofenceList: res?.data || [],

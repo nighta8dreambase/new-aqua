@@ -82,7 +82,7 @@ export type UserCreateInput = {
   agency_contracted_id: string;
   hospital_contracted_id: string;
   destination_port: string | null;
-  department_port: string | null;
+  departure_port: string | null;
 };
 //
 export type UserUpdateInput = {
@@ -170,6 +170,7 @@ export type Filter = {
   filter_wear: string | null;
   filter_battery: string | null;
   filter_yacht_name: string | null;
+  filter_Keyword: string | null;
   page: number;
   perPage: number;
 };

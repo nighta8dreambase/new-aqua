@@ -37,6 +37,8 @@ import FilterListIcon from "@material-ui/icons/FilterList";
 import { Filter } from "../../types/user";
 import { useListAllUser } from "../../services/api/user/useListAllUser";
 import { usePlace } from "../../services/api/Options/usePlace";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import { SwiperUserLists } from "../UserManage/SwiperUserLists";
 
 const UserFilter = observer(({ display = true }: { display?: boolean }) => {
   const [startDate, setStartDate] = useState<Date | null>(webStore.startDate);
@@ -56,9 +58,15 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
   const [filterYachtName, setFilterYachtName] = useState<string | null>(
     webStore.filter_yacht_name || ""
   );
+  // เพิ่ม
+  const [filterKeyword, setFilterKeyword] = useState<string | null>(
+    webStore.filter_Keyword || ""
+  );
+  // เพิ่ม
   const [filterGeoFence, setFilterGeoFence] = useState<string | null>(
     webStore.filter_geo_fence || ""
   );
+
   // const [filterHour, setFilterHour] = useState<number | null>(
   //   webStore.filter_hour
   // );
@@ -88,13 +96,14 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
   const { result_places, loading_places, error_places } = usePlace();
 
   useEffect(() => {
-    console.log("changee");
+    // console.log("changee");
     webStore.setStartDate(startDate);
     webStore.setEndDate(endDate);
     webStore.set_filter_temp(filterTemperature);
     webStore.set_filter_wear(filterWearing);
     webStore.set_filter_battery(filterBattery);
     webStore.set_filter_yacht_name(filterYachtName);
+    webStore.set_filter_Keyword(filterKeyword);
     webStore.set_filter_geo_fence(filterGeoFence);
     // webStore.set_filter_hour(filterHour);
   }, [
@@ -104,6 +113,7 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
     filterWearing,
     filterBattery,
     filterYachtName,
+    filterKeyword,
     filterGeoFence,
   ]);
 
@@ -132,6 +142,7 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
               justifyContent="center"
               width="100%"
               css={{
+                height: "48px",
                 "@media (max-width: 992px)": {
                   width: "50%",
                 },
@@ -139,7 +150,7 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
             >
               <MuiPickersUtilsProvider utils={LuxonUtils}>
                 <KeyboardDatePicker
-                  css={{
+                  style={{
                     margin: 0,
                     width: "100%",
                     borderWidth: 0,
@@ -170,6 +181,7 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
               justifyContent="center"
               width="100%"
               css={{
+                height: "48px",
                 "@media (max-width: 992px)": {
                   width: "50%",
                   borderWidth: 0,
@@ -204,6 +216,7 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
               justifyContent="center"
               width="100%"
               css={{
+                height: "48px",
                 "@media (max-width: 992px)": {
                   width: "50%",
                 },
@@ -234,6 +247,7 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
               justifyContent="center"
               width="100%"
               css={{
+                height: "48px",
                 "@media (max-width: 992px)": {
                   width: "50%",
                   borderWidth: 0,
@@ -265,6 +279,7 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
               justifyContent="center"
               width="100%"
               css={{
+                height: "48px",
                 "@media (max-width: 992px)": {
                   width: "50%",
                 },
@@ -278,7 +293,7 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
                   css={{ fontFamily: "inherit", fontSize: "inherit" }}
                   onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
                     setFilterBattery(event.target.value as string);
-                    console.log("filterBattery", filterBattery);
+                    // console.log("filterBattery", filterBattery);
                   }}
                   labelId="filterBattery-label"
                 >
@@ -296,6 +311,7 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
               justifyContent="center"
               width="100%"
               css={{
+                height: "48px",
                 "@media (max-width: 992px)": {
                   width: "50%",
                   borderWidth: 0,
@@ -303,7 +319,7 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
               }}
             >
               <FormControl css={{ width: "100%" }}>
-                <InputLabel id="filterYachtName-label">Yatch Name</InputLabel>
+                <InputLabel id="filterYachtName-label">Place Name</InputLabel>
                 <Select
                   value={filterYachtName}
                   disableUnderline
@@ -350,6 +366,7 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
                 webStore.set_filter_wear(null);
                 webStore.set_filter_battery(null);
                 webStore.set_filter_yacht_name(null);
+                webStore.set_filter_Keyword(null);
                 webStore.set_filter_geo_fence(null);
 
                 setStartDate(webStore.startDate);
@@ -359,6 +376,7 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
                 setFilterWearing(webStore.filter_wear);
                 setFilterBattery(webStore.filter_battery);
                 setFilterYachtName(webStore.filter_yacht_name);
+                setFilterKeyword(webStore.filter_Keyword);
                 setFilterGeoFence(webStore.filter_geo_fence);
               }}
             >
@@ -371,9 +389,82 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
   );
 });
 
+const UserSearch = observer(
+  ({
+    keywordsearch,
+    setKeywordsearch,
+    displayFilter,
+    setDisplayFilter,
+    inputWidthMobile,
+  }: {
+    inputWidthMobile?: number;
+    keywordsearch: String;
+    setKeywordsearch: (event: any) => void;
+    displayFilter: boolean;
+    setDisplayFilter: (e: boolean) => void;
+  }) => {
+    return (
+      <Box css={{ backgroundColor: "#fff" }} p={1} borderRadius={2}>
+        <InputBase
+          placeholder="Customer name or IMEI or Passport"
+          value={keywordsearch}
+          onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+            setKeywordsearch(event.target.value as string);
+          }}
+          css={{
+            width: 300,
+            padding: "8px 15px",
+            "@media (max-width: 992px)": {
+              fontSize: 12,
+              width: inputWidthMobile ? inputWidthMobile : 235,
+            },
+          }}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            console.log("search");
+          }}
+          css={{
+            padding: 8,
+            minWidth: "unset",
+            boxShadow: "unset",
+          }}
+        >
+          <SearchIcon />
+        </Button>
+        <Button
+          variant="text"
+          onClick={() => {
+            setDisplayFilter(displayFilter ? false : true);
+          }}
+          css={{
+            padding: 8,
+            minWidth: "unset",
+            boxShadow: "unset",
+            borderLeft: "1px solid #ddd",
+            borderRadius: 0,
+            marginLeft: 10,
+            "@media (min-width: 991px)": {
+              display: "none",
+            },
+          }}
+        >
+          <FilterListIcon />
+        </Button>
+      </Box>
+    );
+  }
+);
+
 export const UserList = observer(() => {
   const history = useHistory();
   const [displayFilter, setDisplayFilter] = useState<boolean>(false);
+  const [displayUserLocation, setDisplayUserLocation] = useState<boolean>(
+    false
+  );
+  const [keywordsearch, setKeywordsearch] = useState(String);
   const mapRef = useRef<any>();
   const [page, setPage] = useState<number>(1);
   const filter: Filter = {
@@ -383,6 +474,7 @@ export const UserList = observer(() => {
     filter_wear: webStore.filter_wear,
     filter_battery: webStore.filter_battery,
     filter_yacht_name: webStore.filter_yacht_name,
+    filter_Keyword: keywordsearch,
     page: page,
     perPage: 10,
   };
@@ -438,61 +530,21 @@ export const UserList = observer(() => {
                       padding: 8,
                       minWidth: "unset",
                     }}
+                    onClick={() => {
+                      setDisplayUserLocation(true);
+                    }}
                   >
                     <MapIcon css={{ color: "#4684E2" }} />
                   </Button>
                 </Box>
               </Box>
             </Box>
-            <Box css={{ backgroundColor: "#fff" }} p={1} borderRadius={2}>
-              <InputBase
-                placeholder="Customer name or IMEI or Passport"
-                onChange={() => {
-                  console.log("input search");
-                }}
-                css={{
-                  width: 300,
-                  padding: "8px 15px",
-                  "@media (max-width: 992px)": {
-                    fontSize: 12,
-                    width: 235,
-                  },
-                }}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  console.log("search");
-                }}
-                css={{
-                  padding: 8,
-                  minWidth: "unset",
-                  boxShadow: "unset",
-                }}
-              >
-                <SearchIcon />
-              </Button>
-              <Button
-                variant="text"
-                onClick={() => {
-                  setDisplayFilter(displayFilter ? false : true);
-                }}
-                css={{
-                  padding: 8,
-                  minWidth: "unset",
-                  boxShadow: "unset",
-                  borderLeft: "1px solid #ddd",
-                  borderRadius: 0,
-                  marginLeft: 10,
-                  "@media (min-width: 991px)": {
-                    display: "none",
-                  },
-                }}
-              >
-                <FilterListIcon />
-              </Button>
-            </Box>
+            <UserSearch
+              keywordsearch={keywordsearch}
+              setKeywordsearch={setKeywordsearch}
+              displayFilter={displayFilter}
+              setDisplayFilter={setDisplayFilter}
+            />
           </Box>
         </Grid>
         <Grid item xs={12} sm={12}>
@@ -503,7 +555,7 @@ export const UserList = observer(() => {
             <UserFilter display={displayFilter} />
           </Box>
         </Grid>
-        <Grid item container spacing={1}>
+        <Grid container spacing={1}>
           <Grid item xs={12} md={6}>
             <CardUserList
               result_userList={result_userList}
@@ -565,6 +617,61 @@ export const UserList = observer(() => {
           </Grid>
         </Grid>
       </Grid>
+      {displayUserLocation && (
+        <Grid
+          container
+          className="fixed w-screen h-screen left-0 top-0"
+          style={{ zIndex: 9991 }}
+        >
+          <Box className="absolute w-full z-10 ">
+            <Box className="flex justify-center items-center bg-white">
+              <Button
+                variant="text"
+                onClick={() => {
+                  setDisplayUserLocation(false);
+                }}
+                css={{
+                  padding: "8px 8px 8px 15px",
+                  minWidth: "unset",
+                  boxShadow: "unset",
+                  borderRight: "1px solid #ddd",
+                  borderRadius: 0,
+                }}
+              >
+                <ArrowBackIosIcon style={{ width: 20 }} />
+              </Button>
+              <UserSearch
+                inputWidthMobile={220}
+                keywordsearch={keywordsearch}
+                setKeywordsearch={setKeywordsearch}
+                displayFilter={displayFilter}
+                setDisplayFilter={setDisplayFilter}
+              />
+            </Box>
+            <Box className="bg-white">
+              <UserFilter display={displayFilter} />
+            </Box>
+          </Box>
+          <CardMapMemo
+            mapRef={mapRef}
+            result_userList={result_userList}
+            loading_userList={loading_userList}
+            page={filter.page}
+            perPage={filter.perPage}
+            loadmore={true}
+          />
+          <Box className="absolute w-full z-10 bottom-0">
+            <SwiperUserLists
+              result_userList={result_userList}
+              loading_userList={loading_userList}
+              total={total}
+              filter={filter}
+              setPage={setPage}
+              mapRef={mapRef}
+            />
+          </Box>
+        </Grid>
+      )}
     </Container>
   );
 });

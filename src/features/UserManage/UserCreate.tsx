@@ -53,7 +53,7 @@ export const NON_REQUIRE_USER_FIELD = [
   "agency_contracted_id",
   "avatar",
   "avatar_url",
-  "department_port",
+  "departure_port",
   "destination_port",
   // "device_id_1",
   "device_id_2",
@@ -262,7 +262,7 @@ export const UserCreate = observer(() => {
     device_provider_id: "",
     start_date: null,
     end_date: null,
-    department_port: "",
+    departure_port: "",
     destination_port: "",
     agency_contracted_id: "",
     hospital_contracted_id: "",
@@ -272,17 +272,18 @@ export const UserCreate = observer(() => {
   const { enqueueSnackbar } = useSnackbar();
   const { fire_user_create, loading_user_create } = useCreateUser();
   const { fire_upload_image, loading_upload_image } = useUploadImage();
+  const {
+    result_branches,
+    loading_branches,
+    error_branches,
+  } = useListBranches();
+
   const { result_hospital, loading_hospital, error_hospital } = useListHospital(
     form.branch_id || ""
   );
   const { result_agencies, loading_agencies, error_agencies } = useListAgencies(
     form.branch_id || ""
   );
-  const {
-    result_branches,
-    loading_branches,
-    error_branches,
-  } = useListBranches();
 
   const history = useHistory();
   const setVal = (k: any, v: any) => {
@@ -310,6 +311,8 @@ export const UserCreate = observer(() => {
     : result_hospital.map((h: any) => {
         return { value: h.id, name: h.name_th };
       });
+
+
   option["agency_contracted_id"] = loading_agencies
     ? []
     : result_agencies.map((h: any) => {
@@ -345,13 +348,13 @@ export const UserCreate = observer(() => {
             <Box fontSize="h5.fontSize" fontWeight={600} mb={1}>
               User information
             </Box>
-            <Grid item container>
+            <Grid container>
               <Box order={{ xs: 2, md: 0 }} width={{ xs: "100%", md: "80%" }}>
-                <Grid item container>
+                <Grid container>
                   <Grid item xs={12}>
                     <LabelForm>Information</LabelForm>
                   </Grid>
-                  <Grid item container spacing={1}>
+                  <Grid container spacing={1}>
                     {[
                       { name: "name", label: "Name", width: 6 },
                       { name: "surname", label: "Surname", width: 6 },
@@ -444,9 +447,9 @@ export const UserCreate = observer(() => {
                     }
                   )}
                   <Grid item xs={12}>
-                    <LabelForm>Yatch</LabelForm>
+                    <LabelForm>Place</LabelForm>
                   </Grid>
-                  {[{ name: "place_of_use", label: "Yatch Name" }].map(
+                  {[{ name: "place_of_use", label: "Place Name" }].map(
                     (input) => {
                       return (
                         <Grid item xs={12}>
@@ -470,7 +473,8 @@ export const UserCreate = observer(() => {
                   <Grid item xs={12}>
                     <LabelForm>Wristband</LabelForm>
                   </Grid>
-                  <Grid item xs={12} container spacing={1}>
+                  {/* spacing={1} */}
+                  <Grid item xs={12}>
                     {[
                       { name: "device_id_1", label: "IMEI 01" },
                       { name: "device_id_2", label: "IMEI 02" },
@@ -494,7 +498,8 @@ export const UserCreate = observer(() => {
                   <Grid item xs={12}>
                     <LabelForm>Quarantine</LabelForm>
                   </Grid>
-                  <Grid item xs={12} container spacing={1}>
+                  {/* spacing={1} */}
+                  <Grid item xs={12}>
                     {[
                       { name: "start_date", label: "Start quarantine" },
                       { name: "end_date", label: "End quarantine" },
@@ -541,7 +546,8 @@ export const UserCreate = observer(() => {
                       <Grid item xs={12}>
                         <LabelForm>Contract</LabelForm>
                       </Grid>
-                      <Grid item xs={12} container spacing={1}>
+                      {/* spacing={1} */}
+                      <Grid item xs={12}>
                         {(form.branch_id || loading_hospital) && (
                           <Grid item md={6} xs={12}>
                             <InputDropdown
@@ -584,9 +590,10 @@ export const UserCreate = observer(() => {
                   <Grid item xs={12}>
                     <LabelForm>Departure/Destination</LabelForm>
                   </Grid>
-                  <Grid item xs={12} container spacing={1}>
+                  {/* spacing={1} */}
+                  <Grid item xs={12}>
                     {[
-                      { name: "department_port", label: "Departure Port" },
+                      { name: "departure_port", label: "Departure Port" },
                       { name: "destination_port", label: "Destination Port" },
                     ].map((input) => {
                       return (
@@ -605,7 +612,8 @@ export const UserCreate = observer(() => {
                       );
                     })}
                   </Grid>
-                  <Grid item xs={12} container spacing={1}>
+                  {/* spacing={1} */}
+                  <Grid item xs={12}>
                     <Grid item md={6} xs={12}>
                       <Box mt={6}>
                         <Button

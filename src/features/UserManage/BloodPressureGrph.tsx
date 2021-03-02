@@ -23,6 +23,7 @@ import { useReadLengthOfStay } from "../../services/api/dashboard_report/useRead
 import { useParams } from "react-router-dom";
 import { timeStr } from "../../utils";
 import { UserPreviewData } from "./UserPreview";
+import { ResponsiveLineChart } from "../../components/ResponsiveLineChat";
 
 export const BloodPressureGraph = observer(
   ({
@@ -32,30 +33,19 @@ export const BloodPressureGraph = observer(
   }) => {
     const { userId }: any = useParams();
     const GraphHeight = 300;
-    const GraphColor = ["#CE3F72", "#34A18E"];
+    const GraphColor = ["#84FAB0", "#A1B1FD"];
     const GraphData = (canvas: any) => {
       const ctx = canvas.getContext("2d");
       const gradient1 = ctx.createLinearGradient(0, 0, 0, GraphHeight);
       gradient1.addColorStop(0, GraphColor[0]);
-      gradient1.addColorStop(1, `rgba(255,255,255, 0)`);
+      gradient1.addColorStop(1, `#8FD3F4`);
 
       const gradient2 = ctx.createLinearGradient(0, 0, 0, GraphHeight);
       gradient2.addColorStop(0, GraphColor[1]);
-      gradient2.addColorStop(1, `rgba(255,255,255, 0)`);
+      gradient2.addColorStop(1, `#C2E9FB`);
 
       return {
         datasets: [
-          {
-            label: "blood_systolic",
-            data: (result_blood_pressure_history || []).map(
-              ({ blood_systolic }) => blood_systolic
-            ),
-            borderColor: GraphColor[0],
-            backgroundColor: gradient1,
-            fill: "start",
-            // pointBackgroundColor: "transparent",
-            // pointBorderColor: "transparent",
-          },
           {
             label: "blood_diastolic",
             data: (result_blood_pressure_history || []).map(
@@ -67,11 +57,47 @@ export const BloodPressureGraph = observer(
             // pointBackgroundColor: "transparent",
             // pointBorderColor: "transparent",
           },
+          {
+            label: "blood_systolic",
+            data: (result_blood_pressure_history || []).map(
+              ({ blood_systolic }) => blood_systolic
+            ),
+            borderColor: GraphColor[0],
+            backgroundColor: gradient1,
+            fill: "start",
+            // pointBackgroundColor: "transparent",
+            // pointBorderColor: "transparent",
+          },
         ],
-        labels: (result_blood_pressure_history || []).map(({ timestamp }) =>
-          timeStr(timestamp)
+        labels: (result_blood_pressure_history || []).map(({ timestamp }, i) =>
+          i === 0 ? "" : timeStr(timestamp)
         ),
       };
+    };
+    const lineProps = {
+      legend: { position: "bottom", display: false },
+      options: {
+        maintainAspectRatio: false,
+
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+          xAxes: [
+            {
+              gridLines: {
+                drawBorder: false,
+                display: false,
+              },
+            },
+          ],
+        },
+      },
+      data: GraphData,
     };
 
     return (
@@ -84,33 +110,13 @@ export const BloodPressureGraph = observer(
         <Box fontWeight={600} mb={2}>
           Blood pressure
         </Box>
-        <div style={{ height: 300 }}>
-          <Line
-            legend={{ position: "bottom", display: false }}
-            options={{
-              maintainAspectRatio: false,
-
-              scales: {
-                yAxes: [
-                  {
-                    ticks: {
-                      beginAtZero: true,
-                    },
-                  },
-                ],
-                xAxes: [
-                  {
-                    gridLines: {
-                      drawBorder: false,
-                      display: false,
-                    },
-                  },
-                ],
-              },
-            }}
-            data={GraphData}
-          />
-        </div>
+        <ResponsiveLineChart
+          {...{
+            device: webStore.device,
+            lineProps: lineProps,
+            GraphHeight,
+          }}
+        />
       </Box>
     );
   }

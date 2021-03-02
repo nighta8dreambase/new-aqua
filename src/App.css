@@ -85,7 +85,7 @@ input:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: -50%;
+  /* margin-top: -50%; */
   color: #fff;
 }
 
@@ -98,4 +98,8 @@ input:focus {
   left: 1px;
   border: 6.5px solid transparent;
   border-top: 8px solid var(--color);
+}
+
+.MuiDataGrid-menuIcon button {
+  display: none;
 }

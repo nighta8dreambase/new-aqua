@@ -58,7 +58,6 @@ export const CustomeLabels = observer(
             >
               <Box py={1.5} px={{ xs: 4, md: 0 }}>
                 <Grid
-                  item
                   container
                   css={{
                     padding: "0.5em 0",
@@ -67,13 +66,7 @@ export const CustomeLabels = observer(
                   justify="space-between"
                   alignItems="center"
                 >
-                  <Grid
-                    item
-                    direction="row"
-                    container
-                    alignItems="center"
-                    xs={9}
-                  >
+                  <Grid item direction="row" alignItems="center" xs={9}>
                     <Box
                       css={{
                         width: 10,
@@ -85,7 +78,7 @@ export const CustomeLabels = observer(
                     ></Box>
                     <Box css={{ color: "#5A5A68" }}>{label}</Box>
                   </Grid>
-                  <Grid xs={3}>
+                  <Grid item xs={3}>
                     {showValue ? (
                       <Box textAlign="right">
                         <Box
@@ -160,7 +153,7 @@ export const CustomeLabelsMobile = observer(
         {labels.map((label: string, key: number) => {
           return (
             <Box my={2}>
-              <Grid item direction="row" container>
+              <Grid direction="row" container>
                 <Box
                   css={{
                     width: 10,
@@ -243,8 +236,8 @@ export const CardTotalUserByGender = observer(() => {
         <Box display={{ xs: "block", md: "none" }}>
           <Typography style={{ fontWeight: "bold" }}>Gender</Typography>
         </Box>
-        <Grid item container>
-          <Grid md={12} xs={9}>
+        <Grid container>
+          <Grid item md={12} xs={9}>
             <Doughnut
               height={200}
               legend={{ position: "bottom" }}
@@ -272,7 +265,7 @@ export const CardTotalUserByGender = observer(() => {
               }}
             />
           </Grid>
-          <Grid md={12} xs={3}>
+          <Grid item md={12} xs={3}>
             <Box display={{ sm: "none", xs: "none", md: "block" }}>
               <CustomeLabels
                 data={[

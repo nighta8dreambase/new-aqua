@@ -7,6 +7,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
+import "swiper/swiper-bundle.min.css";
 import "./App.css";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { Login } from "./features/Login";
@@ -25,11 +26,12 @@ import {
 } from "./features/UserManage/UserPreview";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import { LoggingDashboard } from "./features/LoggingDashboard/LoggingDashboard";
-import "swiper/swiper-bundle.min.css";
 import { Notification } from "./features/Notification/Notification";
 import { PushData } from "./features/Setting/PushData";
 import { CreatePushData } from "./features/Setting/CreatePushData";
-import { Geofence } from "./features/Setting/Geofence";
+import { Geofence } from "./features/Setting/Geofence/Geofence";
+import { GeofenceEdit } from "./features/Setting/Geofence/GeofenceEdit";
+import { GeofenceCreate } from "./features/Setting/Geofence/GeofenceCreate";
 // import { Alert } from "./features/Alert/Alert";
 import { Alert, AlertMobile } from "./features/Alert/Alert";
 import { Setting } from "./features/Setting/Setting";
@@ -164,12 +166,12 @@ const App = observer(() => {
               <PrivateRoute
                 path="/setting/geofence/add"
                 exact
-                component={Geofence}
+                component={GeofenceCreate}
               />
               <PrivateRoute
                 path="/setting/geofence/edit/:id"
                 exact
-                component={Geofence}
+                component={GeofenceEdit}
               />
               <PrivateRoute
                 path="/setting/changepassword"

@@ -72,6 +72,7 @@ export const CardNationality = observer(() => {
             }}
           >
             <Grid
+              item
               xs={12}
               md={5}
               style={{ display: "flex", alignItems: "center" }}
@@ -103,7 +104,7 @@ export const CardNationality = observer(() => {
                 }}
               />
             </Grid>
-            <Grid xs={12} md={7}>
+            <Grid item xs={12} md={7}>
               <Box pl={{ md: 4, xs: 2 }} pr={{ md: 2, xs: 3 }} fontSize={14}>
                 <CustomeLabels
                   data={(result_user_by_nation || []).map(({ value }) => value)}

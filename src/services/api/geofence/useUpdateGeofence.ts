@@ -31,5 +31,26 @@ export const useUpdateGeofence = () => {
         method: "PUT",
       });
     },
+    fire_geofence_insert_all_user: (geofence_id: string,places_id:any) => {
+      return fire({
+        method: "POST",
+        url: `api/v1/geofence/${geofence_id}/control-area/users/all`,
+        data:{
+            places:JSON.stringify(places_id)
+        }
+,
+
+      });
+
+    },
+    fire_geofence_insert_custom_user: (geofence_id: string,user_id:any) => {
+      return fire({
+        url: `api/v1/geofence/${geofence_id}/control-area/users`,
+        method: "POST",
+        data:{
+          users:JSON.stringify(user_id)
+      }
+      });
+    },
   };
 };

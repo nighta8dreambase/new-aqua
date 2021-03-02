@@ -8,7 +8,7 @@ import { Places } from "../../../types/places";
 // import { MOCKUP_USER } from "./useReadUser";
 
 export const useListAllUser = (filter?: Filter) => {
-  console.log("useListAllUser filter", filter);
+  // console.log("useListAllUser filter", filter);
   // const MOCKUP_USERS: User[] = Array.from(Array(10).keys()).map((v, index) => {
   //   return {
   //     ...MOCKUP_USER,
@@ -47,10 +47,11 @@ export const useListAllUser = (filter?: Filter) => {
       battery: filter?.filter_battery,
       device_wearing: filter?.filter_wear,
       place: filter?.filter_yacht_name,
+      keyword: filter?.filter_Keyword,
     },
   });
 
-  console.log("useListAllUser", res?.data);
+  // console.log("useListAllUser", res?.data);
 
   return {
     result_userList: res?.data?.user_quarantines || [],

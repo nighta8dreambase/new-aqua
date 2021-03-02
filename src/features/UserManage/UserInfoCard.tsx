@@ -30,6 +30,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { InputDate } from "./UserCreate";
 import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 import { keyframes } from "@emotion/react";
+import { useClipboard } from "use-clipboard-copy";
 
 const Field = observer(
   ({
@@ -45,6 +46,7 @@ const Field = observer(
     edit?: any;
   }) => {
     const { enqueueSnackbar } = useSnackbar();
+    const clipboard = useClipboard();
     return (
       <Box my={1}>
         <Box fontSize={14} css={{ color: "rgba(255, 255, 255, 0.5)" }}>
@@ -56,7 +58,7 @@ const Field = observer(
             <Box
               css={{ cursor: "pointer" }}
               onClick={() => {
-                navigator.clipboard.writeText(value);
+                clipboard.copy(value);
                 enqueueSnackbar(`copy ${value}`, {
                   variant: "success",
                   autoHideDuration: 3000,
@@ -202,8 +204,16 @@ export const EditField = observer(
   }
 );
 
-export const UserInfoCard = ({ user, reload }: { user: User; reload: any }) => {
-  // console.log("user", user);
+export const UserInfoCard = ({
+  user,
+  userRaw,
+  reload,
+}: {
+  user: User;
+  userRaw?: any;
+  reload: any;
+}) => {
+  console.log("user", userRaw);
   const [isEdit, setIsEdit] = useState(false);
   const [editValue, setEditValue] = useState<any>();
   const [loading, setLoading] = useState(false);
@@ -213,24 +223,24 @@ export const UserInfoCard = ({ user, reload }: { user: User; reload: any }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   return (
-    <Grid item container spacing={2}>
-      <Grid md={3} xs={12}>
-        <Field label="Yatch Name" value={user.yatch_name.toString()} />
+    <Grid container spacing={2}>
+      <Grid item md={3} xs={12}>
+        <Field label="Place Name" value={user.yatch_name.toString()} />
       </Grid>
-      <Grid md={3} xs={12}>
+      <Grid item md={3} xs={12}>
         <Field label="Date of birth" value={user.date_of_birth} />
       </Grid>
-      <Grid md={6} xs={12}>
+      <Grid item md={6} xs={12}>
         <Field
           label="Passport Number"
           value={user.passport?.passport_number.toString()}
           copy={true}
         />
       </Grid>
-      <Grid md={3} xs={12}>
+      <Grid item md={3} xs={12}>
         <Field label="Length of stay" value={user.length_of_stay.toString()} />
       </Grid>
-      <Grid md={3} xs={12}>
+      <Grid item md={3} xs={12}>
         <Field
           label="Start quarantine"
           value={dateStrAPI(dateStart)}
@@ -245,7 +255,7 @@ export const UserInfoCard = ({ user, reload }: { user: User; reload: any }) => {
           }}
         />
       </Grid>
-      <Grid md={3} xs={12}>
+      <Grid item md={3} xs={12}>
         <Field
           label="End quarantine"
           value={dateStrAPI(dateEnd)}
@@ -260,28 +270,29 @@ export const UserInfoCard = ({ user, reload }: { user: User; reload: any }) => {
           }}
         />
       </Grid>
-      <Grid md={3} xs={12}>
+      <Grid item md={3} xs={12}>
         <Field label="Type" value={user.passport?.type || "?"} />
       </Grid>
-      <Grid md={3} xs={12}>
+      <Grid item md={3} xs={12}>
         <Field
           label="Contracted hospital"
-          // value={user.passport?.hospital_contracted || "?"}
-          value={"?"}
+          value={userRaw?.hospital?.name_en || "?"}
         />
       </Grid>
-      <Grid md={3} xs={12}>
+      <Grid item md={3} xs={12}>
         <Field
           label="Contracted agency"
-          // value={user.passport?.agency_contracted || "?"}
-          value={"?"}
+          value={userRaw?.agency?.name_en || "?"}
         />
       </Grid>
-      <Grid md={3} xs={12}>
-        <Field label="Departure port" value={"?"} />
+      <Grid item md={3} xs={12}>
+        <Field label="Departure port" value={userRaw?.departure_port || "?"} />
       </Grid>
-      <Grid md={3} xs={12}>
-        <Field label="Destination port" value={"?"} />
+      <Grid item md={3} xs={12}>
+        <Field
+          label="Destination port"
+          value={userRaw?.destination_port || "?"}
+        />
       </Grid>
       <EditField
         {...editValue}

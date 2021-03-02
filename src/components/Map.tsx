@@ -4,6 +4,7 @@ import GoogleMapReact from "google-map-react";
 import { observer } from "mobx-react-lite";
 
 import { ReactComponent as Pin } from "./assets/pin.svg";
+import { ReactComponent as UserPin } from "./assets/user-pin.svg";
 import { Box, makeStyles, Popover } from "@material-ui/core";
 
 function deviceIconStyles() {
@@ -98,7 +99,7 @@ const Marker = observer(
             transform: `translate(-50%, -50%) scale(${hilight ? 1.5 : 1})`,
           }}
           css={css`
-            path {
+            .pin path {
               fill: ${active ? (hilight ? "#5ad01b" : "green") : "red"};
             }
           `}
@@ -107,19 +108,14 @@ const Marker = observer(
           onClick={onClick}
         >
           {dot ? (
-            <Box
-              css={{
-                width: "1rem",
-                height: "1rem",
-                backgroundColor: active ? "green" : "red",
-                borderRadius: "1rem",
-              }}
-            ></Box>
+            <UserPin style={{ width: "1.5rem", height: "auto" }} />
           ) : (
             <>
               <Pin
                 style={{ width: "2rem", height: "auto" }}
-                className={active ? classes.successIcon : classes.errorIcon}
+                className={`pin ${
+                  active ? classes.successIcon : classes.errorIcon
+                }`}
                 fontSize="large"
               />
               <div
@@ -168,7 +164,7 @@ export const Map = observer(
 
     const [center, setCenter] = useState<any>();
     const [zoom, setZoom] = useState<any>();
-    // console.log("locations", locations);
+    const [focusName, setFocusName] = useState<string>();
     if (locations.length > 0) {
       for (const l of locations) {
         lat += l.lat;
@@ -180,7 +176,7 @@ export const Map = observer(
     useEffect(() => {
       if (mapRef) {
         mapRef.current = {
-          focus: (lat: number, lng: number) => {
+          focus: (lat: number, lng: number, name: string) => {
             const valid =
               !isNaN(lat) &&
               !isNaN(lng) &&
@@ -191,17 +187,19 @@ export const Map = observer(
             if (valid) {
               setCenter({ lat, lng });
               setZoom(13);
+              setFocusName(name);
             }
           },
           reset: () => {
             console.log("reset");
             setCenter(undefined);
             setZoom(undefined);
+            setFocusName(undefined);
           },
         };
       }
     }, []);
-    console.log(center, zoom);
+    // console.log(center, zoom);
 
     return (
       // Important! Always set the container height explicitly
@@ -225,7 +223,8 @@ export const Map = observer(
                     hilight:
                       center &&
                       center.lat === location.lat &&
-                      center.lng === location.lng,
+                      center.lng === location.lng &&
+                      focusName === location.name,
                     lat: location.lat,
                     lng: location.lng,
                     name: location.name,

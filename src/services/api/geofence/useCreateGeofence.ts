@@ -18,24 +18,26 @@ export const useCreateGeofence = () => {
   return {
     loading_geofence_create: loading,
     fire_geofence_create: (geofenceInput: GeofenceCreateInput) => {
-      return new Promise((resolve, reject) => {
-        fire({
-          data: {
-            ...geofenceInput,
-            coordinates: JSON.stringify(geofenceInput.coordinates || []),
-          },
-        })
-          .then(({ data: { data, code, message } }) => {
-            if (code === 0) {
-              reject(message);
-            } else {
-              resolve(data);
-            }
-          })
-          .catch((ex) => {
-            reject(ex.toString());
-          });
-      });
+      // return new Promise((resolve, reject) => {
+      //     .then(({ data: { data, code, message } }) => {
+      //       if (code === 0) {
+      //         reject(message);
+      //       } else {
+      //         resolve(data);
+      //       }
+      //     })
+      //     .catch((ex) => {
+      //       reject(ex.toString());
+      //     });
+      // });
+
+
+      return  fire({
+        data: {
+          ...geofenceInput,
+          coordinates: JSON.stringify(geofenceInput.coordinates || []),
+        },
+      })
     },
   };
 };

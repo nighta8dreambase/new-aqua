@@ -22,6 +22,7 @@ import { useReadLengthOfStay } from "../../services/api/dashboard_report/useRead
 import { useParams } from "react-router-dom";
 import { timeStr } from "../../utils";
 import { UserPreviewData } from "./UserPreview";
+import { ResponsiveLineChart } from "../../components/ResponsiveLineChat";
 
 export const HeartRateGraph = observer(
   ({
@@ -31,12 +32,12 @@ export const HeartRateGraph = observer(
   }) => {
     const { userId }: any = useParams();
     const GraphHeight = 300;
-    const GraphColor = ["#E57BBB"];
+    const GraphColor = ["#FF9A9E"];
     const GraphData = (canvas: any) => {
       const ctx = canvas.getContext("2d");
       const gradient = ctx.createLinearGradient(0, 0, 0, GraphHeight);
       gradient.addColorStop(0, GraphColor[0]);
-      gradient.addColorStop(1, `rgba(255,255,255, 0)`);
+      gradient.addColorStop(1, `#FECFEF`);
       return {
         datasets: [
           {
@@ -50,12 +51,36 @@ export const HeartRateGraph = observer(
             // pointBorderColor: "transparent",
           },
         ],
-        labels: (result_heart_rate_history || []).map(({ timestamp }) =>
-          timeStr(timestamp)
+        labels: (result_heart_rate_history || []).map(({ timestamp }, i) =>
+          i === 0 ? "" : timeStr(timestamp)
         ),
       };
     }; //
+    const lineProps = {
+      legend: { position: "bottom", display: false },
+      options: {
+        maintainAspectRatio: false,
 
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+          xAxes: [
+            {
+              gridLines: {
+                drawBorder: false,
+                display: false,
+              },
+            },
+          ],
+        },
+      },
+      data: GraphData,
+    };
     return (
       <Box css={{ borderRadius: 5, backgroundColor: "#fff", padding: 20 }}>
         {loading && (
@@ -66,33 +91,13 @@ export const HeartRateGraph = observer(
         <Box fontWeight={600} mb={2}>
           Heart Rate
         </Box>
-        <div style={{ height: GraphHeight }}>
-          <Line
-            legend={{ position: "bottom", display: false }}
-            options={{
-              maintainAspectRatio: false,
-
-              scales: {
-                yAxes: [
-                  {
-                    ticks: {
-                      beginAtZero: true,
-                    },
-                  },
-                ],
-                xAxes: [
-                  {
-                    gridLines: {
-                      drawBorder: false,
-                      display: false,
-                    },
-                  },
-                ],
-              },
-            }}
-            data={GraphData}
-          />
-        </div>
+        <ResponsiveLineChart
+          {...{
+            device: webStore.device,
+            lineProps: lineProps,
+            GraphHeight,
+          }}
+        />
       </Box>
     );
   }

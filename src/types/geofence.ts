@@ -5,7 +5,7 @@ export interface GeofenceBase {
   type: "radius" | "polygon";
   address?: string;
   radius?: number;
-  maximumDistance: number;
+  max_distance: number;
   coordinates: { lat: number; lng: number }[];
   branch_id: string;
 }
@@ -14,7 +14,9 @@ export interface Geofence extends GeofenceBase {
   id: string | number;
 }
 
-export interface GeofenceCreateInput extends GeofenceBase {}
+export interface GeofenceCreateInput extends Partial<GeofenceBase> {
+  id?: string | number;
+}
 
 export interface GeofenceUpdateInput extends GeofenceBase {
   id: string | number;

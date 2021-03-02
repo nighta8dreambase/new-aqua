@@ -54,6 +54,15 @@ function tapsStyles() {
   };
 }
 
+function dataGridStyles() {
+  return {
+    root: {
+      color: "inherit",
+      borderWidth: 0,
+    },
+  };
+}
+
 export const DeviceHistoryDatagrid = observer(
   ({
     mode,
@@ -70,7 +79,8 @@ export const DeviceHistoryDatagrid = observer(
     data: UserPreviewData;
   }) => {
     const { userId }: any = useParams();
-    const classes = makeStyles(tapsStyles)();
+    const classesTab = makeStyles(tapsStyles)();
+    const classesDataGrid = makeStyles(dataGridStyles)();
 
     const history = useHistory();
     const TYPES = [
@@ -124,6 +134,7 @@ export const DeviceHistoryDatagrid = observer(
       setValueTabs(newValue);
       setType(TYPES[newValue].name);
     };
+    console.log("data", data);
     return (
       <Box
         css={{
@@ -146,7 +157,7 @@ export const DeviceHistoryDatagrid = observer(
           onChange={handleChangeTabs}
           css={{ paddingTop: 10 }}
           classes={{
-            indicator: classes.indicator,
+            indicator: classesTab.indicator,
           }}
         >
           {TYPES.map(({ name }) => (
@@ -159,7 +170,19 @@ export const DeviceHistoryDatagrid = observer(
           ))}
         </Tabs>
         <Box
-          style={{ width: "100%", height: "calc(100vh - 10rem)" }}
+          css={{
+            width: "100%",
+            height: "85%",
+            // height: "calc(100vh - 10rem)",
+            overflow: "scroll",
+            "::-webkit-scrollbar": {
+              display: "none",
+            },
+            " .MuiDataGrid-root": {
+              borderWidth: 0,
+              color: "inherit",
+            },
+          }}
           mt={2}
           px={2}
           id="tableDeviceHistoryDatagrid"
@@ -170,7 +193,6 @@ export const DeviceHistoryDatagrid = observer(
             pageSize={21}
             pagination
             disableSelectionOnClick={true}
-            css={{ color: "inherit", borderWidth: 0 }}
             headerHeight={0}
             autoHeight={true}
             scrollbarSize={0}

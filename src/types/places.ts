@@ -1,5 +1,5 @@
 export type Places = {
-  id: number | string;
+  id: string;
   name_en: string;
   name_th: string;
   created_at: Date;

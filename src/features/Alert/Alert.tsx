@@ -35,6 +35,7 @@ export const Alert = observer((props: any) => {
     filter_wear: webStore.filter_wear,
     filter_battery: webStore.filter_battery,
     filter_yacht_name: webStore.filter_yacht_name,
+    filter_Keyword: webStore.filter_Keyword,
     page: page,
     perPage: 10,
   };
@@ -43,21 +44,22 @@ export const Alert = observer((props: any) => {
   return (
     <Container maxWidth="xl" style={{ maxWidth: 1500 }} className="py-4 pb-16">
       <Box mb={2}>
-        <Grid container xs={12}>
+        <Grid item xs={12}>
           <SubBar title={"SOS Alert"} reload={false} />
         </Grid>
       </Box>
-      <Grid container xs={12}>
+      <Grid item xs={12}>
         <CardSOS fullDetail={true} />
       </Grid>
       {/* hidden Out of geofence */}
       <Box display="none">
         <Box mb={2}>
-          <Grid container xs={12}>
+          <Grid item xs={12}>
             <SubBar title={"Out of geofence"} reload={false} />
           </Grid>
         </Box>
-        <Grid container xs={12} spacing={1}>
+        <Grid item xs={12}>
+          {/* spacing={1} */}
           <Grid item xs={12} md={6}>
             <CardUserList
               result_userList={result_userList}
@@ -159,6 +161,7 @@ export const AlertMobile = observer((props: any) => {
     filter_wear: webStore.filter_wear,
     filter_battery: webStore.filter_battery,
     filter_yacht_name: webStore.filter_yacht_name,
+    filter_Keyword: webStore.filter_Keyword,
     page: page,
     perPage: 10,
   };

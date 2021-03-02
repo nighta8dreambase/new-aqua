@@ -41,6 +41,10 @@ class WebStore {
   set_filter_yacht_name(v: any) {
     this.filter_yacht_name = v;
   }
+  filter_Keyword: string | null = null;
+  set_filter_Keyword(v: any) {
+    this.filter_Keyword = v;
+  }
   filter_geo_fence: string | null = null;
   set_filter_geo_fence(v: any) {
     this.filter_geo_fence = v;
@@ -53,6 +57,7 @@ class WebStore {
     this.set_filter_wear(null);
     this.set_filter_battery(null);
     this.set_filter_yacht_name(null);
+    this.set_filter_Keyword(null);
     this.set_filter_geo_fence(null);
   }
   get readUserFilter() {

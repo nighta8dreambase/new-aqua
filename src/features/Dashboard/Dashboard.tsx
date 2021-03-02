@@ -58,8 +58,10 @@ export const SubBar = observer(
     viewAll,
     importExcel,
     addNewFence,
+    children,
   }: {
     title: string | React.ReactElement;
+    children?: React.ReactElement;
     back?: boolean;
     reload?: boolean;
     viewAll?: string;
@@ -74,7 +76,7 @@ export const SubBar = observer(
     const history = useHistory();
     return (
       <Box className="flex justify-between items-center" pt={4} pb={0}>
-        <Grid item container alignItems="center">
+        <Grid container alignItems="center">
           {back && (
             <IconButton
               onClick={() => {
@@ -147,25 +149,7 @@ export const SubBar = observer(
             </Button>
           </Box>
         )}
-        {addNewFence && (
-          <Box display="flex" justifyContent="flex-end" className="w-full">
-            <Button
-              color="primary"
-              css={{
-                fontWeight: "bold",
-                color: "black",
-              }}
-              startIcon={<AddIcon />}
-              size="large"
-              variant="text"
-              onClick={() => {
-                window.open(addNewFence, "_self");
-              }}
-            >
-              ADD NEW FENCE
-            </Button>
-          </Box>
-        )}
+        {children}
       </Box>
     );
   }
@@ -236,6 +220,7 @@ export const Dashboard = () => {
     filter_wear: webStore.filter_wear,
     filter_battery: webStore.filter_battery,
     filter_yacht_name: webStore.filter_yacht_name,
+    filter_Keyword: webStore.filter_Keyword,
     page: page,
     perPage: 10,
   };
@@ -323,12 +308,13 @@ export const Dashboard = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item container xs={12} spacing={1}>
+        {/* spacing={1} */}
+        <Grid item xs={12}>
           <Grid item md={6} xs={12}>
             <SubBar title={"Users"} reload={false} viewAll={"user/list"} />
           </Grid>
         </Grid>
-        <Grid item container spacing={1}>
+        <Grid container spacing={1}>
           <Grid item xs={6}>
             <CardUserList
               result_userList={result_userList}
@@ -401,6 +387,7 @@ export const DashboardMobile = () => {
     filter_wear: webStore.filter_wear,
     filter_battery: webStore.filter_battery,
     filter_yacht_name: webStore.filter_yacht_name,
+    filter_Keyword: webStore.filter_Keyword,
     page: page,
     perPage: 10,
   };
@@ -414,21 +401,21 @@ export const DashboardMobile = () => {
         <Grid item xs={12}>
           <Swiper
             spaceBetween={5}
-            slidesPerView="auto"
+            slidesPerView={1.5}
             // slidesPerView={2}
-            // onSlideChange={() => console.log("slide change")}
-            // onSwiper={(swiper) => console.log(swiper)}
+            // onSlideChange={(swiper) => console.log("slide change", swiper)}
+            onSwiper={(swiper) => console.log("DashboardMobile", swiper)}
           >
-            <SwiperSlide style={{ width: "60%" }}>
+            <SwiperSlide>
               <CardTopTotalUserByGender />
             </SwiperSlide>
-            <SwiperSlide style={{ width: "60%" }}>
+            <SwiperSlide>
               <CardTopNationality />
             </SwiperSlide>
-            <SwiperSlide style={{ width: "60%" }}>
+            <SwiperSlide>
               <CardTopAge />
             </SwiperSlide>
-            <SwiperSlide style={{ width: "80%" }}>
+            <SwiperSlide>
               <CardTopLengthOfStay />
             </SwiperSlide>
           </Swiper>

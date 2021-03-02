@@ -111,6 +111,11 @@ const ListMenu = () => {
   const { result_userListSOS_raw, loading_userListSOS } = useListSOSUser();
   return (
     <>
+      {webStore.device === "mobile" && (
+        <div style={{ marginBottom: "2rem" }}>
+          <ProfileSelector />
+        </div>
+      )}
       <MenuItem
         onClick={() => {
           history.push("/");
@@ -173,6 +178,42 @@ const ListMenu = () => {
   );
 };
 
+export const ProfileSelector = observer(() => {
+  const history = useHistory();
+  // const width = "";
+  // console.log(webStore.device)
+  return (
+    <Select
+      labelId="user-selection"
+      id="user-selection"
+      style={{
+        marginLeft: "1rem",
+        minWidth: "10rem",
+        display: webStore.selectedProject ? "" : "none",
+      }}
+      value={webStore.selectedProject?.id || ""}
+      variant="outlined"
+      onChange={(e) => {
+        if (!webStore.profile) {
+          return;
+        }
+        webStore.setSelectedProject(
+          (webStore.profile.project || []).filter(
+            ({ id }) => id === e.target.value
+          )[0]
+        );
+        history.push("/");
+      }}
+    >
+      {(webStore.profile?.project || []).map((project) => {
+        const { id, name_th } = project;
+        console.warn("loop project", webStore.selectedProject?.id, id);
+        return <MenuItem value={id}>{name_th}</MenuItem>;
+      })}
+    </Select>
+  );
+});
+
 export const PrivateContainer = observer(({ children, title }: any) => {
   const classes = useStyles();
   const history = useHistory();
@@ -200,6 +241,8 @@ export const PrivateContainer = observer(({ children, title }: any) => {
   };
   const [notiCount, setNotiCount] = useState(0);
   const location = useLocation();
+
+  // console.log("token", localStorage.getItem("token"));
 
   return (
     <div>
@@ -238,32 +281,7 @@ export const PrivateContainer = observer(({ children, title }: any) => {
               src={webStore.profile.logo}
             />
           )}
-          <Select
-            labelId="user-selection"
-            id="user-selection"
-            style={{
-              marginLeft: "1rem",
-              display: webStore.selectedProject ? "" : "none",
-            }}
-            value={webStore.selectedProject?.id}
-            variant="outlined"
-            onChange={(e) => {
-              if (!webStore.profile) {
-                return;
-              }
-              webStore.setSelectedProject(
-                (webStore.profile.project || []).filter(
-                  ({ id }) => id === e.target.value
-                )[0]
-              );
-              history.push("/");
-            }}
-          >
-            {(webStore.profile?.project || []).map((project) => {
-              const { id, name_th } = project;
-              return <MenuItem value={id}>{name_th}</MenuItem>;
-            })}
-          </Select>
+          {webStore.device !== "mobile" && <ProfileSelector />}
 
           {webStore.profile && (
             <>
@@ -280,7 +298,18 @@ export const PrivateContainer = observer(({ children, title }: any) => {
                 display={{ xs: "block", md: "none" }}
               ></Box>
               <Box display={{ xs: "none", md: "block" }}>
-                <MenuItem className={classes.menuButton}>
+                {/* <MenuItem className={classes.menuButton}>
+                  <IconButton
+                    onClick={() => {
+                      history.push("/setting");
+                    }}
+                    size="small"
+                  >
+                    <SettingsIcon />
+                  </IconButton>
+                </MenuItem> */}
+              </Box>
+              <MenuItem className={classes.menuButton}>
                   <IconButton
                     onClick={() => {
                       history.push("/setting");
@@ -290,7 +319,6 @@ export const PrivateContainer = observer(({ children, title }: any) => {
                     <SettingsIcon />
                   </IconButton>
                 </MenuItem>
-              </Box>
               <MenuItem
                 className={classes.menuButton}
                 onClick={(e) => {

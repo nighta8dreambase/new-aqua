@@ -162,6 +162,7 @@ export const LoggingDashboard = observer(() => {
     filter_wear: webStore.filter_wear,
     filter_battery: webStore.filter_battery,
     filter_yacht_name: webStore.filter_yacht_name,
+    filter_Keyword: webStore.filter_Keyword,
     page: 1,
     perPage: 10,
   };
