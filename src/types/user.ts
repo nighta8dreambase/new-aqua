@@ -105,6 +105,7 @@ export type UserFromAPI = {
   created_at: string;
   date_end: string;
   date_start: string;
+  BTUtcTime: any;
 
   blood_pressures?: {
     blood_systolic: number;

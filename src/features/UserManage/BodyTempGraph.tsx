@@ -55,7 +55,7 @@ export const BodyTempGraph = observer(
           },
           {
             label: "minimum standard",
-            data: (result_temp_history || []).map(({ body_temp }) => 37.5),
+            data: (result_temp_history || []).map(({ body_temp }) => 35),
             borderColor: GraphColor[1],
             fill: false,
             pointBackgroundColor: "transparent",

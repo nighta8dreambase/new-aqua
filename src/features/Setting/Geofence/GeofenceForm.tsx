@@ -542,7 +542,7 @@ const DatagridSearchModalInner = (p: DatagridSearch) => {
             toggle(param.data.id);
           }}
           components={{
-            NoRowsOverlay: (params: any) => {
+            noRowsOverlay: (params: any) => {
               if (!apiRef.current) {
                 apiRef.current = params.api.current;
                 setApiReady(true);
