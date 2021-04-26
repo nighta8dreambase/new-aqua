@@ -86,17 +86,11 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
   ];
 
   const BatteryOptions = [
-    // { value: "10", label: ">= 80%" },
-    // { value: "8", label: "60 - 79%" },
-    // { value: "6", label: "40 - 59%" },
-    // { value: "4", label: "20 - 39%" },
-    // { value: "2", label: "< 20%" },
-    { value: "4", label: "76 - 100%" },
-    { value: "3", label: "51 - 75%" },
-    { value: "2", label: "26 - 50%" },
-    { value: "1", label: "16 - 25%" },
-    { value: "0", label: "1 - 15%" },
-    { value: "-1", label: "Turn off (including out of battery and charging)" },
+    { value: "10", label: ">= 80%" },
+    { value: "8", label: "60 - 79%" },
+    { value: "6", label: "40 - 59%" },
+    { value: "4", label: "20 - 39%" },
+    { value: "2", label: "< 20%" },
   ];
 
   const { result_places, loading_places, error_places } = usePlace();

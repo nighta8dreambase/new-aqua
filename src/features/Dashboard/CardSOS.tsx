@@ -69,6 +69,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
 const SOSItem = observer(
   ({
     user,
@@ -76,17 +77,15 @@ const SOSItem = observer(
     fullDetail,
     border,
     place,
-    BTUtcTime,
   }: {
     user: User;
     device?: userDevice;
     fullDetail?: boolean;
     place?: Places;
     border?: boolean;
-    BTUtcTime?: any;
   }) => {
     const classes = useStyles();
-    // console.log("BTUtcTime",BTUtcTime);
+
     return (
       <>
         <Box
@@ -121,7 +120,7 @@ const SOSItem = observer(
                     fontWeight={400}
                   >
                     <WarningIcon fontSize="small" />
-                    <Box ml={0.5}>{dateStr(new Date(BTUtcTime))}</Box>
+                    <Box ml={0.5}>{dateStr(new Date(user.updated_at))}</Box>
                   </Box>
                 )}
               </Box>
@@ -184,7 +183,6 @@ export const CardSOS = observer(({ fullDetail }: { fullDetail?: boolean }) => {
   const { result_userListSOS_raw, loading_userListSOS } = useListSOSUser();
   const [total, setTotal] = useState(0);
   useEffect(() => {
-    console.log("result_userListSOS_raw",result_userListSOS_raw);
     setTotal(result_userListSOS_raw.length);
     setPageCont(Math.ceil(result_userListSOS_raw.length / (perPage || 10)));
   }, [result_userListSOS_raw]);
@@ -201,7 +199,7 @@ export const CardSOS = observer(({ fullDetail }: { fullDetail?: boolean }) => {
         minHeight: "100%",
         flexFlow: "column",
         // flexDirection: "column",
-        borderRadius: 10,
+        borderRadius: 5,
         "@media (min-width: 991px)": { backgroundColor: "#fff" },
       }}
       className="relative"
@@ -243,18 +241,14 @@ export const CardSOS = observer(({ fullDetail }: { fullDetail?: boolean }) => {
           }}
           p={{ xs: 2, md: 0 }}
         >
-          {(result_userListSOS_raw || []).map((user, i, BTUtcTime) => {
-            // console.log("user", user);
-            if(user.BTUtcTime != null){
-              return (
-                <SOSItem
-                  {...user}
-                  fullDetail={fullDetail}
-                  border={i !== result_userListSOS_raw.length - 1}
-                />
-              );
-            }
-              
+          {(result_userListSOS_raw || []).map((user, i) => {
+            return (
+              <SOSItem
+                {...user}
+                fullDetail={fullDetail}
+                border={i !== result_userListSOS_raw.length - 1}
+              />
+            );
           })}
         </Box>
         {pageCount > 1 && (

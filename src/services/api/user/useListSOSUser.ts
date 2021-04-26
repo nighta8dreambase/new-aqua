@@ -38,14 +38,10 @@ export const useListSOSUser = (filter?: Filter) => {
   let user = (res?.data || []).map((v) => {
     return processServerUser(v);
   });
-  let BTUtcTime = (res?.data || []).map((v) => {
-    return processServerUser(v);
-  });
 
   return {
     result_userListSOS_raw: res?.data || [],
     result_userListSOS: user,
-    result_userListSOS_BTUtcTime: BTUtcTime,
     loading_userListSOS: loading,
     error_userListSOS: error,
   };

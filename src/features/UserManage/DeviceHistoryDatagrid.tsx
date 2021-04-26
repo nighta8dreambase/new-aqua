@@ -12,7 +12,6 @@ import {
   LinearProgress,
   Tabs,
   Tab,
-  List,
 } from "@material-ui/core";
 import { webStore } from "../../stores/webStore";
 import { DataGrid, ColDef, ValueGetterParams } from "@material-ui/data-grid";
@@ -170,7 +169,6 @@ export const DeviceHistoryDatagrid = observer(
             />
           ))}
         </Tabs>
-        
         <Box
           css={{
             width: "100%",
@@ -189,25 +187,23 @@ export const DeviceHistoryDatagrid = observer(
           px={2}
           id="tableDeviceHistoryDatagrid"
         >
-          <List css={{maxHeight: '100%', overflow: 'auto', height: '100%'}}>
-            <DataGrid
-              rows={data || []}
-              columns={columns}
-              // pageSize={21}
-              pagination
-              disableSelectionOnClick={true}
-              headerHeight={0}
-              autoHeight={true}
-              scrollbarSize={0}
-              rowHeight={37}
-              hideFooterPagination={true}
-              hideFooterRowCount={true}
-              // loading={true}
-              // rowsPerPageOptions={[20, 50, 100]}
-              // density="compact"
-              // autoPageSize={true}
-            />
-          </List>
+          <DataGrid
+            rows={data || []}
+            columns={columns}
+            pageSize={21}
+            pagination
+            disableSelectionOnClick={true}
+            headerHeight={0}
+            autoHeight={true}
+            scrollbarSize={0}
+            rowHeight={37}
+            hideFooterPagination={true}
+            hideFooterRowCount={true}
+            // loading={true}
+            // rowsPerPageOptions={[20, 50, 100]}
+            // density="compact"
+            // autoPageSize={true}
+          />
         </Box>
       </Box>
     );

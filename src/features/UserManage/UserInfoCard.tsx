@@ -213,7 +213,7 @@ export const UserInfoCard = ({
   userRaw?: any;
   reload: any;
 }) => {
-  // console.log("user", userRaw);
+  console.log("user", userRaw);
   const [isEdit, setIsEdit] = useState(false);
   const [editValue, setEditValue] = useState<any>();
   const [loading, setLoading] = useState(false);
@@ -336,7 +336,7 @@ export const UserProfile = ({ user, reload }: { user: User; reload: any }) => {
         <Avatar
           src={user.avatar}
           alt={user.name}
-          css={{ width: "120px", height: "120px" }}
+          css={{ width: "80px", height: "80px" }}
         />
       </Box>
       <Box>

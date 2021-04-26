@@ -56,11 +56,7 @@ import WifiOffIcon from "@material-ui/icons/WifiOff";
 import FavoriteIcon from "../../components/assets/favorite.svg";
 import TemperatureIcon from "../../components/assets/temperature.svg";
 import BloodIcon from "../../components/assets/blood.svg";
-import BatteryIconFull from "../../components/assets/noun_Battery_3408796.svg";
-import BatteryIconHigh from "../../components/assets/noun_Battery_-1.svg";
-import BatteryIconMedium from "../../components/assets/noun_Battery_-2.svg";
-import BatteryIconLow from "../../components/assets/noun_Battery_-3.svg";
-import BatteryIconLoss from "../../components/assets/noun_Battery_-4.svg";
+import BatteryIcon from "../../components/assets/battery.svg";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { Filter, User, UserFromAPI, UsersQuarantine } from "../../types/user";
 import { userDevice } from "../../types/device";
@@ -153,24 +149,6 @@ export const OnlineTab = observer(
 
 export const DeviceValueTab = observer(
   ({ device }: { device?: userDevice }) => {
-    var iconBattery;
-    if(typeof device !== 'undefined'){
-      if(device.battery.toString() < "0"){
-        iconBattery = BatteryIconLoss;
-      }else if(device.battery.toString() == "0"){
-        iconBattery = BatteryIconLoss;
-      }else if(device.battery.toString() == "1"){
-        iconBattery = BatteryIconLow;
-      }else if(device.battery.toString() == "2"){
-        iconBattery = BatteryIconMedium;
-      }else if(device.battery.toString() == "3"){
-        iconBattery = BatteryIconHigh;
-      }else if(device.battery.toString() == "4"){
-        iconBattery = BatteryIconFull;
-      }else if(device.battery.toString() > "4"){
-        iconBattery = BatteryIconFull;
-      }
-    }
     return (
       <Grid container>
         <Grid item xs={3} style={{ maxWidth: "4.5rem" }}>
@@ -203,8 +181,8 @@ export const DeviceValueTab = observer(
         </Grid>
         <Grid item xs={3} style={{ maxWidth: "3rem" }}>
           <DeviceValue
-            icon={iconBattery}
-            value={``}
+            icon={BatteryIcon}
+            value={`${device?.battery}%`}
             position="right"
           />
         </Grid>
