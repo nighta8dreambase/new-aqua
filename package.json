@@ -75,6 +75,7 @@
   },
   "scripts": {
     "start": "craco start",
+    "build": "yarn build",
     "test": "craco test",
     "eject": "react-scripts eject"
   },
