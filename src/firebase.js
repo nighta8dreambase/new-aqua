@@ -3,6 +3,7 @@ import 'firebase/messaging';
 import { API_PATH } from "./utils/const";
 import axios, { AxiosRequestConfig } from "axios";
 
+
 var firebaseConfig = {
   apiKey: "AIzaSyDzef8AiE3Fw8jPGnvJZHEreKYgl4kGWp0",
   authDomain: "aqua-dashboard.firebaseapp.com",

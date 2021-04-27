@@ -43,19 +43,19 @@ import firebase from 'firebase/app';
 import 'firebase/messaging';
 import { getToken, onMessageListener } from './firebase';
 
-var firebaseConfig = {
-  apiKey: "AIzaSyDzef8AiE3Fw8jPGnvJZHEreKYgl4kGWp0",
-  authDomain: "aqua-dashboard.firebaseapp.com",
-  databaseURL: "https://aqua-dashboard.firebaseio.com",
-  projectId: "aqua-dashboard",
-  storageBucket: "aqua-dashboard.appspot.com",
-  messagingSenderId: "515081409051",
-  appId: "1:515081409051:web:e5ecb915c3c9818f405ebe",
-  measurementId: "G-RRXEWY2CJD"
-};
+// var firebaseConfig = {
+//   apiKey: "AIzaSyDzef8AiE3Fw8jPGnvJZHEreKYgl4kGWp0",
+//   authDomain: "aqua-dashboard.firebaseapp.com",
+//   databaseURL: "https://aqua-dashboard.firebaseio.com",
+//   projectId: "aqua-dashboard",
+//   storageBucket: "aqua-dashboard.appspot.com",
+//   messagingSenderId: "515081409051",
+//   appId: "1:515081409051:web:e5ecb915c3c9818f405ebe",
+//   measurementId: "G-RRXEWY2CJD"
+// };
 
-firebase.initializeApp(firebaseConfig);
-const messaging = firebase.messaging();
+// firebase.initializeApp(firebaseConfig);
+// const messaging = firebase.messaging();
 
 const formLabelsTheme = createMuiTheme({
   overrides: {
@@ -91,19 +91,19 @@ const App = observer(() => {
     webStore.setDevice(mobile ? "mobile" : "desktop");
     console.log(webStore.device);
   }, []);
-  messaging.onMessage((payload) => {
-    toast.warn(payload.notification.title + " "+ payload.notification.body, {
-      position: "top-right",
-      autoClose: false,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    toast.success(payload.notification.title);
-    console.log(payload);
-  });
+  // messaging.onMessage((payload) => {
+  //   toast.warn(payload.notification.title + " "+ payload.notification.body, {
+  //     position: "top-right",
+  //     autoClose: false,
+  //     hideProgressBar: false,
+  //     closeOnClick: true,
+  //     pauseOnHover: true,
+  //     draggable: true,
+  //     progress: undefined,
+  //   });
+  //   toast.success(payload.notification.title);
+  //   console.log(payload);
+  // });
   console.log(webStore.device);
   if (webStore.device === "unknown") {
     return <></>;
@@ -113,7 +113,7 @@ const App = observer(() => {
   
   return (
     <MuiThemeProvider theme={formLabelsTheme}>
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={false}
         newestOnTop
@@ -121,7 +121,7 @@ const App = observer(() => {
         rtl={false}
         pauseOnFocusLoss
         draggable
-      />
+      /> */}
       <SnackbarProvider>
         <Global
           styles={css`
