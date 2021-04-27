@@ -61,6 +61,7 @@
     "react-scripts": "4.0.1",
     "react-slick": "^0.27.13",
     "react-sticky": "^6.0.3",
+    "react-toastify": "^7.0.4",
     "react-watermark-component": "^2.2.1",
     "recompose": "^0.30.0",
     "sanitize-html-react": "^1.13.0",
