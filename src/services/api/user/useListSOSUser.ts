@@ -41,11 +41,15 @@ export const useListSOSUser = (filter?: Filter) => {
   let BTUtcTime = (res?.data || []).map((v) => {
     return processServerUser(v);
   });
+  let created_at = (res?.data || []).map((v) => {
+    return processServerUser(v);
+  });
 
   return {
     result_userListSOS_raw: res?.data || [],
     result_userListSOS: user,
     result_userListSOS_BTUtcTime: BTUtcTime,
+    result_userListSOS_created_at: created_at,
     loading_userListSOS: loading,
     error_userListSOS: error,
   };

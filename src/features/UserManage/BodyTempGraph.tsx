@@ -28,7 +28,7 @@ export const BodyTempGraph = observer(
   ({ data: { loading, result_temp_history } }: { data: UserPreviewData }) => {
     const { userId }: any = useParams();
     const GraphHeight = 300;
-    const GraphColor = ["#66a6ff", "#3FCE67", "#E39090"];
+    const GraphColor = ["#66a6ff", "#3FCE67", "#FF0000"];
     const GraphData = (canvas: any) => {
       const ctx = canvas.getContext("2d");
       const gradient1 = ctx.createLinearGradient(0, 0, 0, GraphHeight);
@@ -64,7 +64,7 @@ export const BodyTempGraph = observer(
           },
           {
             label: "maximum standard",
-            data: (result_temp_history || []).map(({ body_temp }) => 37.8),
+            data: (result_temp_history || []).map(({ body_temp }) => 37.5),
             borderColor: GraphColor[2],
             fill: false,
             pointBackgroundColor: "transparent",

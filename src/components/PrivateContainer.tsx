@@ -319,7 +319,7 @@ export const PrivateContainer = observer(({ children, title }: any) => {
                     <SettingsIcon />
                   </IconButton>
                 </MenuItem>
-              <MenuItem
+              {/* <MenuItem
                 className={classes.menuButton}
                 onClick={(e) => {
                   location.pathname === "/notification"
@@ -353,7 +353,7 @@ export const PrivateContainer = observer(({ children, title }: any) => {
                     </Badge>
                   )}
                 </IconButton>
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem className={classes.menuButton}>
                 <IconButton onClick={handleMenu} size="small">
                   <Avatar

@@ -43,7 +43,7 @@ import AddIcon from "@material-ui/icons/Add";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MuiAccordion from "@material-ui/core/Accordion";
 import WatchIcon from "@material-ui/icons/Watch";
-import { dateStr, dateStrAPI } from "../../utils";
+import { dateStr, dateStrAPI, timeStr } from "../../utils";
 
 import {
   BatteryHistoryReport,
@@ -146,7 +146,7 @@ export const UserPreview = observer(() => {
 
   const [isAddDevice, setIsAddDevice] = useState(false);
   const [newIMEI, setNewIMEI] = useState("");
-
+    
   return (
     <Container maxWidth="xl" style={{ maxWidth: 1500 }} className="py-4 pb-16">
       <SubBar title={"User Detail"} reload={false} back={true} />
@@ -275,13 +275,13 @@ export const UserPreview = observer(() => {
                     css={{ color: "#4B4C56" }}
                     mt={{ xs: 2, md: 0 }}
                   >
-                    Latest update : {dateStrAPI(deivce.updated_at)}
+                    Latest update : {dateStrAPI(deivce.updated_at)} : {timeStr(deivce.updated_at)}
                   </Box>
                 </Box>
               </AccordionSummary>
               <AccordionDetails>
                 <Box px={{ xs: 0, md: 3 }} width="100%">
-                  <Grid item xs={12}>
+                  <Grid container xs={12}>
                     <Grid item xs={12} md={4}>
                       <Box
                         display="flex"
@@ -395,7 +395,7 @@ export const UserPreview = observer(() => {
         <Box fontSize="h5.fontSize" fontWeight={500} mb={{ xs: 2, md: 0 }}>
           Health Log
         </Box>
-        <Grid item md={4} xs={12}>
+        <Grid container md={4} xs={12}>
           <Grid item xs={6} css={{ padding: "0 5px" }}>
             <MuiPickersUtilsProvider utils={LuxonUtils}>
               <KeyboardDatePicker
@@ -423,7 +423,7 @@ export const UserPreview = observer(() => {
               />
             </MuiPickersUtilsProvider>
           </Grid>
-          <Grid item xs={6} css={{ padding: "0 5px" }} style={{marginTop:"15px"}}>
+          <Grid item xs={6} css={{ padding: "0 5px" }}>
             <MuiPickersUtilsProvider utils={LuxonUtils}>
               <KeyboardDatePicker
                 style={{ margin: 0, width: "100%", backgroundColor: "#fff" }}

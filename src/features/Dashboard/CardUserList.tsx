@@ -157,15 +157,15 @@ export const DeviceValueTab = observer(
     if(typeof device !== 'undefined'){
       if(device.battery.toString() < "0"){
         iconBattery = BatteryIconLoss;
-      }else if(device.battery.toString() == "0"){
+      }else if(device.battery.toString() === "0"){
         iconBattery = BatteryIconLoss;
-      }else if(device.battery.toString() == "1"){
+      }else if(device.battery.toString() === "1"){
         iconBattery = BatteryIconLow;
-      }else if(device.battery.toString() == "2"){
+      }else if(device.battery.toString() === "2"){
         iconBattery = BatteryIconMedium;
-      }else if(device.battery.toString() == "3"){
+      }else if(device.battery.toString() === "3"){
         iconBattery = BatteryIconHigh;
-      }else if(device.battery.toString() == "4"){
+      }else if(device.battery.toString() === "4"){
         iconBattery = BatteryIconFull;
       }else if(device.battery.toString() > "4"){
         iconBattery = BatteryIconFull;
@@ -228,7 +228,6 @@ export const UserItem = observer(
     borderTop?: boolean;
   }) => {
     const history = useHistory();
-    // console.log("UserItem", device);
     return (
       <Box
         className="relative"

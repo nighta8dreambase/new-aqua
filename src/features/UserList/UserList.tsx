@@ -90,12 +90,11 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
     // { value: "8", label: "60 - 79%" },
     // { value: "6", label: "40 - 59%" },
     // { value: "4", label: "20 - 39%" },
-    // { value: "2", label: "< 20%" },
     { value: "4", label: "76 - 100%" },
     { value: "3", label: "51 - 75%" },
     { value: "2", label: "26 - 50%" },
     { value: "1", label: "16 - 25%" },
-    { value: "0", label: "1 - 15%" },
+    { value: "-0", label: "1 - 15%" },
     { value: "-1", label: "Turn off (including out of battery and charging)" },
   ];
 
@@ -299,7 +298,6 @@ const UserFilter = observer(({ display = true }: { display?: boolean }) => {
                   css={{ fontFamily: "inherit", fontSize: "inherit" }}
                   onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
                     setFilterBattery(event.target.value as string);
-                    // console.log("filterBattery", filterBattery);
                   }}
                   labelId="filterBattery-label"
                 >
@@ -409,6 +407,7 @@ const UserSearch = observer(
     displayFilter: boolean;
     setDisplayFilter: (e: boolean) => void;
   }) => {
+    
     return (
       <Box css={{ backgroundColor: "#fff" }} p={1} borderRadius={2}>
         <InputBase
@@ -484,7 +483,9 @@ export const UserList = observer(() => {
     page: page,
     perPage: 10,
   };
+  // console.log("filterS",filter.filter_battery);
   const { result_userList, loading_userList, total } = useListAllUser(filter);
+  
   return (
     <Container maxWidth="xl" className="py-4">
       <Grid container>

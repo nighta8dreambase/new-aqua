@@ -120,13 +120,20 @@ export const DeviceHistoryDatagrid = observer(
     const selected: any = TYPES[TYPES.map(({ name }) => name).indexOf(t)];
     const columns: ColDef[] = [
       { field: "timeStamp", width: 200 },
-      { field: selected.field, width: 100 },
+      { field: selected.field, width: 111 },
       // { field: "length_of_stay", headerName: "length_of_stay", width: 200 },
     ];
     const data = (selected.data || []).map(({ ...d }) => {
+      if(d.device_status){
+        if(d.device_status === 1){
+          d.device_status = "Wearing";
+        }else{
+          d.device_status = "Not Wearing";
+        }
+      }
       return { ...d, id: d.timestamp, timeStamp: dateStr(d.timestamp) };
     });
-
+    
     const handleChangeTabs = (
       event: React.ChangeEvent<{}>,
       newValue: number
@@ -135,7 +142,6 @@ export const DeviceHistoryDatagrid = observer(
       setValueTabs(newValue);
       setType(TYPES[newValue].name);
     };
-    console.log("data", data);
     return (
       <Box
         css={{
