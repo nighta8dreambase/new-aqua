@@ -24,10 +24,6 @@ import {
   UserPreview,
   UserPreviewMobile,
 } from "./features/UserManage/UserPreview";
-import {
-  UserPreviewSOS,
-  UserPreviewSOSMobile,
-} from "./features/UserManage/UserPreviewSOS";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import { LoggingDashboard } from "./features/LoggingDashboard/LoggingDashboard";
 import { Notification } from "./features/Notification/Notification";
@@ -189,15 +185,6 @@ const App = observer(() => {
                   webStore.device === "desktop"
                     ? UserPreview
                     : UserPreviewMobile
-                }
-              />
-              <PrivateRoute
-                path="/user/:userId/previewUserSOS"
-                exact
-                component={
-                  webStore.device === "desktop"
-                    ? UserPreviewSOS
-                    : UserPreviewSOSMobile
                 }
               />
               <PrivateRoute
